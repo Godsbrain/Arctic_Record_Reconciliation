@@ -1,56 +1,14 @@
-# Arctic\_Record\_Reconciliation
-
-\## 🧠 System Architecture
-
-Raw Records (CSV / Database)
-
-&#x20;      ↓
-
-Data Cleaning \& Standardization
-
-&#x20;      ↓
-
-Data Quality Assessment
-
-&#x20;      ↓
-
-Record Linkage Engine (Fuzzy Matching)
-
-&#x20;      ↓
-
-Analytics \& Insights
-
-&#x20;      ↓
-
-Investigation Prioritization
-
-&#x20;      ↓
-
-Interactive Dashboard (Streamlit)
-
-
-
-This system processes raw historical data through a structured pipeline, transforming it into actionable insights for analysts and decision-makers.
-
-
-
-Each stage contributes to improving data reliability and supporting investigation workflows.
-
-
-
-
+\# Arctic Record Reconciliation System
 
 
 
 \## 🚀 Live App
 
-
-
 https://arctic-record-reconciliation.streamlit.app/
 
 
 
-\# Arctic Record Reconciliation System
+\---
 
 
 
@@ -62,7 +20,43 @@ This project is an end-to-end data reconciliation and investigation system desig
 
 
 
-The system integrates record matching, data quality scoring, and investigation logic into an interactive dashboard.
+It integrates data processing, record linkage, and analytics into an interactive dashboard, enabling analysts and decision-makers to explore and validate historical records efficiently.
+
+
+
+\---
+
+
+
+\## 🧠 System Architecture
+
+This system processes raw data through a structured pipeline, transforming it into actionable insights for analysts. Each stage contributes to improving data reliability and supporting investigation workflows.
+
+
+
+\---
+
+
+
+\## 📸 Dashboard Preview
+
+
+
+\### 🔍 Dashboard Overview
+
+images/search results.png
+
+
+
+\### 📊 Match Results
+
+images/Matches.png
+
+
+
+\### 🚨 Priority Cases
+
+images/priority cases.png
 
 
 
@@ -80,19 +74,15 @@ The system integrates record matching, data quality scoring, and investigation l
 
 \- ✅ Data quality assessment (completeness and missing fields)
 
-\- ✅ Priority case detection for investigation
+\- ✅ Identification of high-priority investigation cases
 
 \- ✅ Interactive dashboard built with Streamlit
+
+\- ✅ Visual analytics with metrics and charts
 
 
 
 \---
-
-
-
-\## 🧠 Project Architecture
-
-
 
 
 
@@ -100,17 +90,17 @@ The system integrates record matching, data quality scoring, and investigation l
 
 
 
-\- Python
+\- \*\*Python\*\*
 
-\- Pandas
+\- \*\*Pandas\*\*
 
-\- SQLAlchemy
+\- \*\*SQLAlchemy\*\*
 
-\- MySQL
+\- \*\*MySQL\*\*
 
-\- Streamlit
+\- \*\*Streamlit\*\*
 
-\- RapidFuzz
+\- \*\*RapidFuzz\*\*
 
 
 
@@ -118,21 +108,23 @@ The system integrates record matching, data quality scoring, and investigation l
 
 
 
-\## 📊 Dashboard
+\## 📊 Dashboard Capabilities
 
 
 
-The Streamlit dashboard allows users to:
+The Streamlit dashboard enables users to:
 
 
 
-\- Search records
+\- 🔍 Search and explore records
 
-\- View match results with confidence scores
+\- 📊 View matching results with confidence scores
 
-\- Analyze data quality
+\- 🧪 Analyze data quality and completeness
 
-\- Identify high-priority investigation cases
+\- 🚨 Identify high-priority cases requiring investigation
+
+\- 📈 Visualize distributions of match categories and quality metrics
 
 
 
@@ -144,33 +136,75 @@ The Streamlit dashboard allows users to:
 
 
 
-1\. Clone repository:
+1\. Clone the repository:
+
+
+
+
 
 git clone https://github.com/Godsbrain/Arctic\_Record\_Reconciliation.git
 
-2\. Navigate into project: cd Arctic\_Record\_Reconciliation
 
-3\. Activate virtual environment:venv\\Scripts\\activate
 
-4\. Install dependencies:pip install -r requirements.txt
-
-5\. Run the app:streamlit run app/main.py
-
-\## 🎯 Use Case
+2\. Navigate into the project:
 
 
 
-This system is applicable to:
+
+
+cd Arctic\_Record\_Reconciliation
+
+
+
+3\. Activate the virtual environment:
+
+
+
+
+
+venv\\Scripts\\activate
+
+
+
+4\. Install dependencies:
+
+
+
+
+
+pip install -r requirements.txt
+
+
+
+5\. Run the application:
+
+
+
+
+
+streamlit run app/main.py
+
+
+
+\---
+
+
+
+\## 🎯 Use Cases
+
+
+
+This system can be applied to:
 
 
 
 \- Government record reconciliation
 
-\- Data cleaning and deduplication
+\- Data deduplication and cleaning workflows
 
-\- Fraud detection workflows
+\- Fraud detection and identity matching
 
-\- Historical data analysis
+\- Historical and archival data analysis
 
 
 
@@ -182,17 +216,21 @@ This system is applicable to:
 
 
 
-\- Record linkage may produce false matches, especially with incomplete data
+\- Record linkage may produce false matches, especially with incomplete or inconsistent data
 
-\- Historical datasets often contain inconsistencies or missing values
+\- Historical datasets often contain inaccuracies or missing values
 
-\- Humans should review decisions based on automated matching
+\- Automated matching should support, not replace, human decision-making
 
 \- Care must be taken to avoid bias when interpreting results
 
 
 
-This system is designed to support analysts, not replace human decision-making.
+This system is designed to assist analysts, ensuring transparency and accountability in data-driven decisions.
+
+
+
+\---
 
 
 
@@ -200,11 +238,11 @@ This system is designed to support analysts, not replace human decision-making.
 
 
 
-This system supports decision-making by:
+This system provides actionable insights for stakeholders by:
 
 
 
-\- Identifying high-priority records requiring manual investigation
+\- Identifying records that require manual review
 
 \- Highlighting areas with poor data quality
 
@@ -214,7 +252,11 @@ This system supports decision-making by:
 
 
 
-These insights can assist government agencies, analysts, and researchers.
+These insights support decision-making for government agencies, analysts, and researchers.
+
+
+
+\---
 
 
 
@@ -222,5 +264,5 @@ These insights can assist government agencies, analysts, and researchers.
 
 
 
-GitHub: https://github.com/Godsbrain
+\*\*GitHub:\*\* https://github.com/Godsbrain
 
