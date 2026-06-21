@@ -44,21 +44,13 @@ This system processes raw data through a structured pipeline, transforming it in
 
 \### 🔍 Dashboard Overview
 
-!\[Dashboard](images/search%20results.png)
+!\[Dashboard](images/search.png)
 
 
 
 \### 📊 Match Results
 
-!\[Matches](images/Matches.png)
-
-
-
-\### 🚨 Priority Cases
-
-!\[Priority](images/priority%20cases.png)
-
-
+!\[Matches](images/matches.pngrity.png)
 
 
 
