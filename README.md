@@ -44,7 +44,7 @@ This system processes raw data through a structured pipeline, transforming it in
 
 \### 🔍 Dashboard Overview
 
-!\[Dashboard](images/search.png)
+!\[Search](images/search.png)
 
 
 
