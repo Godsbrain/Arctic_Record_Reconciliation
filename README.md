@@ -35,28 +35,19 @@ The system integrates data processing, record linkage, and analytics into an int
 \## 📸 Dashboard Preview
 
 
+## 📸 Dashboard Preview
 
-\### 📊 Dashboard
+### 📊 Dashboard
+![Dashboard](images/dashboard.png)
 
-!\[Dashboard](images/dashboard.png)
+### 📊 Match Results
+![Match Results](images/match_results.png)
 
+### 🔍 Comparison View
+![Comparison View](images/comparison_view.png)
 
-
-\### 📊 Match Results
-
-!\[Match Results](images/match\_results.png)
-
-
-
-\### 🔍 Comparison View
-
-!\[Comparison View](images/comparison\_view.png)
-
-
-
-\### 🌍 Map View
-
-!\[Map](images/map.png)
+### 🌍 Map View
+![Map](images/map.png)
 
 \---
 
