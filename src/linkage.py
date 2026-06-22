@@ -2,93 +2,106 @@ from rapidfuzz import fuzz
 import pandas as pd
 
 
-def compute_similarity(row1, row2):
+def find_matches(df1, df2=None):
     """
-    Compute similarity score between two records
+    Supports:
+    - Single dataset (df1 only) → internal matching
+    - Dual dataset (df1 vs df2) → reconciliation matching
     """
-    name1 = f"{row1['first_name']} {row1['last_name']}"
-    name2 = f"{row2['first_name']} {row2['last_name']}"
 
-    name_score = fuzz.ratio(name1, name2) / 100
+    results = []
 
-    # Birth year similarity
-    if pd.isna(row1['birth_year']) or pd.isna(row2['birth_year']):
-        birth_score = 0
-    else:
-        birth_score = 1 if row1['birth_year'] == row2['birth_year'] else 0
+    # ======================
+    # 🔹 CASE 1: SINGLE DATASET
+    # ======================
+    if df2 is None:
+        for i, row1 in df1.iterrows():
+            for j, row2 in df1.iterrows():
+                if i >= j:
+                    continue  # Avoid duplicate/self comparison
 
-    # Community similarity
-    community_score = fuzz.ratio(
-        str(row1['community']),
-        str(row2['community'])
-    ) / 100
+                name_score = fuzz.token_sort_ratio(
+                    str(row1.get("first_name", "")) + " " + str(row1.get("last_name", "")),
+                    str(row2.get("first_name", "")) + " " + str(row2.get("last_name", ""))
+                )
 
-    # Final weighted score
-    total_score = (
-        0.6 * name_score +
-        0.3 * birth_score +
-        0.1 * community_score
-    )
+                birth_diff = abs(
+                    (row1.get("birth_year", 0) or 0) -
+                    (row2.get("birth_year", 0) or 0)
+                )
 
-    return {
-        "total": total_score,
-        "name": name_score,
-        "birth": birth_score,
-        "community": community_score
-    }
+                # combined score
+                score = name_score - (birth_diff * 2)
 
+                if score > 85:
+                    category = "High Match"
+                elif score > 70:
+                    category = "Possible Match"
+                else:
+                    continue
 
-def categorize_score(score):
-    """
-    Assign category based on score
-    """
-    if score >= 0.9:
-        return "High Match"
-    elif score >= 0.7:
-        return "Possible Match"
-    elif score >= 0.5:
-        return "Manual Review"
-    else:
-        return "Low Match"
-
-
-def find_matches(df):
-    """
-    Compare all records and find matches
-    """
-    matches = []
-
-    for i in range(len(df)):
-        for j in range(i + 1, len(df)):
-
-            scores = compute_similarity(df.iloc[i], df.iloc[j])
-            total_score = scores["total"]
-
-            if total_score > 0.5:
-                matches.append({
-                    "record_1": i,
-                    "record_2": j,
-                    "score": total_score,
-                    "category": categorize_score(total_score),
-                    "name_score": scores["name"],
-                    "birth_score": scores["birth"],
-                    "community_score": scores["community"]
+                results.append({
+                    "record1": i,
+                    "record2": j,
+                    "name1": f"{row1.get('first_name')} {row1.get('last_name')}",
+                    "name2": f"{row2.get('first_name')} {row2.get('last_name')}",
+                    "score": score,
+                    "category": category
                 })
 
-    return pd.DataFrame(matches)
+    # ======================
+    # 🔹 CASE 2: DUAL DATASET (MAIN USE CASE)
+    # ======================
+    else:
+        for i, row1 in df1.iterrows():
+            for j, row2 in df2.iterrows():
 
+                # ---- NAME SIMILARITY ----
+                name1 = f"{row1.get('first_name', '')} {row1.get('last_name', '')}"
+                name2 = f"{row2.get('first_name', '')} {row2.get('last_name', '')}"
 
-if __name__ == "__main__":
-    from src.cleaning import clean_dataset
-    from src.database import get_engine
+                name_score = fuzz.token_sort_ratio(name1, name2)
 
-    df = clean_dataset("data/raw/sample_records.csv")
+                # ---- BIRTH YEAR DIFFERENCE ----
+                birth1 = row1.get("birth_year", 0) or 0
+                birth2 = row2.get("birth_year", 0) or 0
 
-    matches = find_matches(df)
+                birth_diff = abs(birth1 - birth2)
 
-    engine = get_engine()
+                # ---- LOCATION SIMILARITY (optional boost) ----
+                loc1 = str(row1.get("community", ""))
+                loc2 = str(row2.get("community", ""))
 
-    matches.to_sql("record_matches", con=engine, if_exists="replace", index=False)
+                location_score = fuzz.partial_ratio(loc1, loc2)
 
-    print("✅ Matches saved to database!")
-    print(matches)
+                # ---- FINAL SCORE ----
+                score = (
+                    name_score * 0.6 +
+                    location_score * 0.2 +
+                    max(0, 100 - birth_diff * 10) * 0.2
+                )
+
+                # ---- CLASSIFICATION ----
+                if score >= 85:
+                    category = "High Match"
+                elif score >= 70:
+                    category = "Possible Match"
+                elif score >= 55:
+                    category = "Manual Review"
+                else:
+                    continue
+
+                results.append({
+                    "record1_id": row1.get("id", i),
+                    "record2_id": row2.get("id", j),
+                    "name1": name1,
+                    "name2": name2,
+                    "birth1": birth1,
+                    "birth2": birth2,
+                    "location1": loc1,
+                    "location2": loc2,
+                    "score": round(score, 2),
+                    "category": category
+                })
+
+    return pd.DataFrame(results)

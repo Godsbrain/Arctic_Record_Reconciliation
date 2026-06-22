@@ -3,10 +3,22 @@ import pandas as pd
 
 def identify_priority_cases(matches_df, quality_df):
 
-    # Merge for record_1
+    # ======================
+    # 🔹 Detect column format (VERY IMPORTANT)
+    # ======================
+    if "record1_id" in matches_df.columns:
+        col1 = "record1_id"
+        col2 = "record2_id"
+    else:
+        col1 = "record1"
+        col2 = "record2"
+
+    # ======================
+    # 🔹 Merge for record1
+    # ======================
     merged_1 = matches_df.merge(
         quality_df,
-        left_on="record_1",
+        left_on=col1,
         right_on="record_id",
         how="left"
     ).rename(columns={
@@ -14,10 +26,12 @@ def identify_priority_cases(matches_df, quality_df):
         "completeness_score": "completeness_1"
     })
 
-    # Merge for record_2
+    # ======================
+    # 🔹 Merge for record2
+    # ======================
     merged_full = merged_1.merge(
         quality_df,
-        left_on="record_2",
+        left_on=col2,
         right_on="record_id",
         how="left"
     ).rename(columns={
@@ -25,12 +39,14 @@ def identify_priority_cases(matches_df, quality_df):
         "completeness_score": "completeness_2"
     })
 
-    # Priority rule
+    # ======================
+    # 🔹 Priority logic
+    # ======================
     priority_cases = merged_full[
         (merged_full["category"].isin(["High Match", "Possible Match"])) &
         (
-            (merged_full["manual_review_1"] == True) |
-            (merged_full["manual_review_2"] == True)
+            merged_full["manual_review_1"] |
+            merged_full["manual_review_2"]
         )
     ]
 
