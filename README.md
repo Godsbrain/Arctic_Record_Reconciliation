@@ -16,11 +16,15 @@ https://arctic-record-reconciliation.streamlit.app/
 
 
 
-This project is an end-to-end data reconciliation and investigation system designed to identify duplicate records, assess data quality, and prioritize cases for manual review.
+This project is an end-to-end \*\*data reconciliation and investigation system\*\* designed to identify duplicate or related records across multiple datasets.
 
 
 
-It integrates data processing, record linkage, and analytics into an interactive dashboard, enabling analysts and decision-makers to explore and validate historical records efficiently.
+It simulates real-world workflows by linking \*\*census and parish records\*\*, evaluating \*\*data quality\*\*, and prioritizing cases that require human review.
+
+
+
+The system integrates data processing, record linkage, and analytics into an interactive dashboard for analysts and decision-makers.
 
 
 
@@ -28,37 +32,77 @@ It integrates data processing, record linkage, and analytics into an interactive
 
 
 
-\## 🧠 System Architecture
-
-This system processes raw data through a structured pipeline, transforming it into actionable insights for analysts. Each stage contributes to improving data reliability and supporting investigation workflows.
-
-
-
 \## 📸 Dashboard Preview
 
 
 
-\### 🔍 Dashboard Overview
+\### 📊 Dashboard
 
-data/raw/images/search.png
+!\[Dashboard](images/dashboard.png)
 
 
 
 \### 📊 Match Results
 
-data/raw/images/Matches.png
+!\[Match Results](images/match\_results.png)
 
 
 
-\### 🚨 Priority Cases
+\### 🔍 Comparison View
 
-data/raw/images/Priority.png
-
-
+!\[Comparison View](images/comparison\_view.png)
 
 
 
+\### 🌍 Map View
 
+!\[Map](images/map.png)
+
+\---
+
+
+
+\## 🧠 Approach
+
+
+
+The system performs multi-source record linkage using:
+
+
+
+\- \*\*Fuzzy name matching\*\* (RapidFuzz)
+
+\- \*\*Birth year comparison\*\*
+
+\- \*\*Location/Community similarity\*\*
+
+
+
+Each match is scored and classified into:
+
+
+
+\- ✅ \*\*High Match\*\*
+
+\- ⚠️ \*\*Possible Match\*\*
+
+\- 🔴 \*\*Manual Review\*\*
+
+
+
+Additionally, records are evaluated for:
+
+
+
+\- \*\*Completeness\*\*
+
+\- \*\*Missing values\*\*
+
+\- \*\*Data consistency\*\*
+
+
+
+\---
 
 
 
@@ -66,17 +110,45 @@ data/raw/images/Priority.png
 
 
 
-\- ✅ Record matching using fuzzy string similarity (RapidFuzz)
+\- 🔍 Fuzzy record matching across datasets
 
-\- ✅ Explainable scoring (name, birth year, community)
+\- 📊 Interactive dashboard with real-time metrics
 
-\- ✅ Data quality assessment (completeness and missing fields)
+\- 🧪 Data quality assessment and scoring
 
-\- ✅ Identification of high-priority investigation cases
+\- 🚨 Priority investigation case identification
 
-\- ✅ Interactive dashboard built with Streamlit
+\- 🔍 Side-by-side record comparison view
 
-\- ✅ Visual analytics with metrics and charts
+\- 📥 Export matched results (CSV download)
+
+\- 🌍 Map visualization of records
+
+
+
+\---
+
+
+
+\## 📊 Dashboard Capabilities
+
+
+
+The Streamlit app allows users to:
+
+
+
+\- 🔍 Search and filter records
+
+\- 📊 Analyze match categories and confidence scores
+
+\- 🧪 Evaluate data quality and completeness
+
+\- 🚨 Identify high-priority investigation cases
+
+\- 📉 Visualize distributions of matches and quality metrics
+
+\- 🔍 Compare matched records side-by-side
 
 
 
@@ -92,37 +164,9 @@ data/raw/images/Priority.png
 
 \- \*\*Pandas\*\*
 
-\- \*\*SQLAlchemy\*\*
-
-\- \*\*MySQL\*\*
-
 \- \*\*Streamlit\*\*
 
 \- \*\*RapidFuzz\*\*
-
-
-
-\---
-
-
-
-\## 📊 Dashboard Capabilities
-
-
-
-The Streamlit dashboard enables users to:
-
-
-
-\- 🔍 Search and explore records
-
-\- 📊 View matching results with confidence scores
-
-\- 🧪 Analyze data quality and completeness
-
-\- 🚨 Identify high-priority cases requiring investigation
-
-\- 📈 Visualize distributions of match categories and quality metrics
 
 
 
@@ -136,131 +180,11 @@ The Streamlit dashboard enables users to:
 
 1\. Clone the repository:
 
-
-
-
+```bash
 
 git clone https://github.com/Godsbrain/Arctic\_Record\_Reconciliation.git
-
-
-
-2\. Navigate into the project:
-
-
-
-
 
 cd Arctic\_Record\_Reconciliation
 
 
-
-3\. Activate the virtual environment:
-
-
-
-
-
-venv\\Scripts\\activate
-
-
-
-4\. Install dependencies:
-
-
-
-
-
-pip install -r requirements.txt
-
-
-
-5\. Run the application:
-
-
-
-
-
-streamlit run app/main.py
-
-
-
-\---
-
-
-
-\## 🎯 Use Cases
-
-
-
-This system can be applied to:
-
-
-
-\- Government record reconciliation
-
-\- Data deduplication and cleaning workflows
-
-\- Fraud detection and identity matching
-
-\- Historical and archival data analysis
-
-
-
-\---
-
-
-
-\## ⚖️ Ethical Considerations
-
-
-
-\- Record linkage may produce false matches, especially with incomplete or inconsistent data
-
-\- Historical datasets often contain inaccuracies or missing values
-
-\- Automated matching should support, not replace, human decision-making
-
-\- Care must be taken to avoid bias when interpreting results
-
-
-
-This system is designed to assist analysts, ensuring transparency and accountability in data-driven decisions.
-
-
-
-\---
-
-
-
-\## 📊 Stakeholder Insights
-
-
-
-This system provides actionable insights for stakeholders by:
-
-
-
-\- Identifying records that require manual review
-
-\- Highlighting areas with poor data quality
-
-\- Supporting reconciliation across multiple data sources
-
-\- Providing visibility into matching confidence levels
-
-
-
-These insights support decision-making for government agencies, analysts, and researchers.
-
-
-
-\---
-
-
-
-\## 📌 Author
-
-
-
-\*\*GitHub:\*\* https://github.com/Godsbrain
 
